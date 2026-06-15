@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acsensia — Revenue Operations Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:    #1C2333;
+      --darker:  #0F1A2B;
+      --card-dark: #162030;
+      --cyan:    #3AABDC;
+      --white:   #FFFFFF;
+      --light-bg:#F4F7FA;
+      --text-dark:#1C2333;
+      --muted:   #64748B;
+      --border:  #E2E8F0;
+      --slate:   #94A3B8;
+      --green:   #15803D;
+      --green-bg:#DCFCE7;
+      --red:     #B91C1C;
+      --red-bg:  #FEE2E2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* ─── UTILITY ─────────────────────────────────────── */
+    .label {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 28px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s ease;
+      border: 2px solid transparent;
+    }
+    .btn:hover { opacity: 0.88; }
+
+    .btn-cyan {
+      background: var(--cyan);
+      color: var(--white);
+      border-color: var(--cyan);
+    }
+
+    .btn-outline-white {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--dark);
+      border-bottom: 1px solid #2A3549;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--slate);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+
+    .nav-links .btn-cyan {
+      padding: 9px 20px;
+      font-size: 14px;
+      color: var(--white);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: all 0.2s;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--dark);
+      border-top: 1px solid #2A3549;
+      padding: 16px 24px 24px;
+      gap: 16px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--slate);
+    }
+    .mobile-menu a:hover { color: var(--cyan); }
+    .mobile-menu .btn-cyan {
+      text-align: center;
+      padding: 12px;
+    }
+
+    /* ─── SECTION 1: HERO ─────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+
+    .hero-inner { max-width: 720px; }
+
+    .hero-inner h1 {
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 24px;
+    }
+
+    .hero-inner p {
+      font-size: 18px;
+      color: var(--slate);
+      max-width: 560px;
+      margin: 0 auto 36px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .hero-small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ─── SECTION 2: THE PROBLEM ──────────────────────── */
+    #the-problem {
+      background: var(--light-bg);
+      padding: 80px 0;
+    }
+
+    .section-header { margin-bottom: 48px; }
+    .section-header h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .card-white {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 24px;
+    }
+
+    .card-num {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .card-white p {
+      font-size: 15px;
+      color: var(--text-dark);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .callout {
+      background: var(--light-bg);
+      border-left: 4px solid var(--cyan);
+      padding: 24px;
+      border-radius: 0 6px 6px 0;
+    }
+    .callout p {
+      font-size: 16px;
+      color: var(--text-dark);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* ─── SECTION 3: WHAT WE DO ───────────────────────── */
+    #what-we-do {
+      background: var(--dark);
+      padding: 80px 0;
+    }
+
+    #what-we-do .section-header h2 {
+      color: var(--white);
+    }
+
+    .cards-dark-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .card-dark {
+      background: var(--card-dark);
+      border-top: 3px solid var(--cyan);
+      border-radius: 6px;
+      padding: 28px;
+    }
+
+    .card-dark h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .card-dark p {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    .offer-box {
+      background: var(--darker);
+      border-left: 4px solid var(--cyan);
+      padding: 28px;
+      border-radius: 0 6px 6px 0;
+    }
+    .offer-box p {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    /* ─── SECTION 4: WHAT WE BUILD ────────────────────── */
+    #what-we-build {
+      background: var(--light-bg);
+      padding: 80px 0;
+    }
+
+    .cards-6 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .card-accent {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--cyan);
+      border-radius: 0 6px 6px 0;
+      padding: 20px;
+    }
+
+    .card-accent h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .card-accent p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─── SECTION 5: PROOF ────────────────────────────── */
+    #proof {
+      background: var(--dark);
+      padding: 80px 0;
+    }
+
+    #proof .section-header h2 {
+      color: var(--white);
+    }
+
+    .proof-main {
+      background: var(--darker);
+      border-left: 4px solid var(--cyan);
+      padding: 32px;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 24px;
+    }
+
+    .proof-client-label {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .proof-result {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .proof-sub {
+      font-size: 16px;
+      color: var(--slate);
+      margin-bottom: 20px;
+      margin-top: 6px;
+    }
+
+    .proof-body {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    .proof-cards-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .proof-card-small {
+      background: var(--darker);
+      border-left: 4px solid var(--cyan);
+      padding: 24px;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .proof-card-small h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .proof-card-small p {
+      font-size: 14px;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    /* ─── SECTION 6: WHO IT IS FOR ────────────────────── */
+    #is-this-for-you {
+      background: var(--light-bg);
+      padding: 80px 0;
+    }
+
+    .fit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .fit-col {
+      border-radius: 6px;
+      padding: 28px;
+    }
+
+    .fit-col.green {
+      background: var(--green-bg);
+      border: 1px solid var(--green);
+    }
+
+    .fit-col.red {
+      background: var(--red-bg);
+      border: 1px solid var(--red);
+    }
+
+    .fit-col h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .fit-col.green h3 { color: var(--green); }
+    .fit-col.red h3 { color: var(--red); }
+
+    .fit-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .fit-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+      align-items: flex-start;
+    }
+
+    .fit-list li .icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .fit-col.green .icon { color: var(--green); }
+    .fit-col.red .icon { color: var(--red); }
+
+    /* ─── SECTION 7: CTA ──────────────────────────────── */
+    #cta {
+      background: var(--dark);
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    #cta h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    #cta p {
+      font-size: 16px;
+      color: var(--slate);
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    #cta .cta-small {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--darker);
+      padding: 40px 24px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 32px;
+      flex-wrap: wrap;
+      padding-bottom: 32px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #1E2D44;
+    }
+
+    .footer-brand strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .footer-brand span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: right;
+    }
+
+    .footer-contact a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-contact a:hover { color: var(--cyan); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { display: none; }
+
+      #hero { padding: 100px 24px 60px; }
+      .hero-inner h1 { font-size: 32px; }
+      .hero-inner p { font-size: 16px; }
+
+      .cards-3,
+      .cards-dark-3,
+      .proof-cards-2,
+      .fit-grid { grid-template-columns: 1fr; }
+
+      .cards-6 { grid-template-columns: 1fr; }
+
+      #what-we-do .section-header h2,
+      .section-header h2 { font-size: 28px; }
+
+      .proof-result { font-size: 36px; }
+
+      #cta h2 { font-size: 28px; }
+
+      .footer-top { flex-direction: column; }
+      .footer-contact { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ──────────────────────────────────────────── -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <img src="logo.png" alt="Acsensia" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#what-we-do">What We Do</a></li>
+        <li><a href="#proof">Proof</a></li>
+        <li><a href="audit.html" class="btn btn-cyan">Book Free Audit</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#what-we-do">What We Do</a>
+      <a href="#proof">Proof</a>
+      <a href="audit.html" class="btn btn-cyan">Book Free Audit</a>
+    </div>
+  </nav>
+
+  <!-- ─── SECTION 1: HERO ───────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-inner">
+      <span class="label">Revenue Operations Consulting</span>
+      <h1>Your revenue is not the problem.<br>Your backend is.</h1>
+      <p>Most businesses at your stage are losing £5,000–£20,000 every month not because leads are bad — but because the system handling those leads was never properly built.</p>
+      <div class="hero-buttons">
+        <a href="audit.html" class="btn btn-cyan">Book Free Audit</a>
+        <a href="#what-we-do" class="btn btn-outline-white">See How It Works</a>
+      </div>
+      <p class="hero-small">Free 20-minute audit. No pitch. Max 6 clients at any time.</p>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 2: THE PROBLEM ───────────────────────── -->
+  <section id="the-problem">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">The Situation</span>
+        <h2>Does this sound familiar?</h2>
+      </div>
+      <div class="cards-3">
+        <div class="card-white">
+          <span class="card-num">01</span>
+          <p>Leads are coming in and some calls are closing</p>
+        </div>
+        <div class="card-white">
+          <span class="card-num">02</span>
+          <p>But revenue is stuck at the same number month after month</p>
+        </div>
+        <div class="card-white">
+          <span class="card-num">03</span>
+          <p>More content. More outreach. More hours. Nothing moves.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <p>The problem is almost never the offer. The problem is that the backend has not caught up with the front end. Everything still depends on the founder personally.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 3: WHAT WE DO ────────────────────────── -->
+  <section id="what-we-do">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">What We Do</span>
+        <h2 style="color:var(--white)">We build the backend so revenue actually moves.</h2>
+      </div>
+      <div class="cards-dark-3">
+        <div class="card-dark">
+          <h3>01 — Find the Leaks</h3>
+          <p>We audit your setup and calculate exactly where revenue is escaping in £.</p>
+        </div>
+        <div class="card-dark">
+          <h3>02 — Build the System</h3>
+          <p>We build the infrastructure done for you inside your existing tools.</p>
+        </div>
+        <div class="card-dark">
+          <h3>03 — It Runs Without You</h3>
+          <p>Tested. Documented. The pipeline moves whether you are working or not.</p>
+        </div>
+      </div>
+      <div class="offer-box">
+        <p>We help UK coaches, consultants and agencies stuck at £10K–£50K/month build the backend infrastructure that lets revenue actually move — pipelines, pre-call sequences, post-call follow-up, tagging, and dashboards.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 4: WHAT WE BUILD ─────────────────────── -->
+  <section id="what-we-build">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">What We Build</span>
+        <h2>The infrastructure most businesses at this stage are missing.</h2>
+      </div>
+      <div class="cards-6">
+        <div class="card-accent">
+          <h3>Pipeline Architecture</h3>
+          <p>Clean stages, deal values, and tracking so you see your business in 60 seconds.</p>
+        </div>
+        <div class="card-accent">
+          <h3>Pre-Call Sequences</h3>
+          <p>Automated reminders before every call. Show-up rates move from 50% to 75%+.</p>
+        </div>
+        <div class="card-accent">
+          <h3>No-Show Recovery</h3>
+          <p>A message fires 15 minutes after a missed call. Recovers 20–35% automatically.</p>
+        </div>
+        <div class="card-accent">
+          <h3>Post-Call Follow-Up</h3>
+          <p>21-day automated closing sequence. 7 touches without you lifting a finger.</p>
+        </div>
+        <div class="card-accent">
+          <h3>Reporting Dashboard</h3>
+          <p>5 core numbers in one view. Monday morning email sent automatically.</p>
+        </div>
+        <div class="card-accent">
+          <h3>Pre-Qualification System</h3>
+          <p>Filters unqualified leads before they reach your calendar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 5: PROOF ──────────────────────────────── -->
+  <section id="proof">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">Proof of Work</span>
+        <h2 style="color:var(--white)">Results from real engagements.</h2>
+      </div>
+      <div class="proof-main">
+        <span class="proof-client-label">Ethan Golding · High-Ticket Coaching</span>
+        <div class="proof-result">£10K → £75K MRR</div>
+        <div class="proof-sub">in 6 months</div>
+        <p class="proof-body">No CRM. No automation. Founder managing every lead manually. Built the entire infrastructure from scratch — GHL from zero, 20+ automation workflows, pre-call sequences, onboarding automation. Revenue grew 7x not from new leads but from converting the ones already coming in.</p>
+      </div>
+      <div class="proof-cards-2">
+        <div class="proof-card-small">
+          <h4>Charlie Phillips · Coaching at £50K/month</h4>
+          <p>Show-up rate stabilised with a 12-email pre-call sequence.</p>
+        </div>
+        <div class="proof-card-small">
+          <h4>Zac Ratcliff · Two businesses</h4>
+          <p>Two businesses systematised on GHL. Pre-call sequences, Zapier connections, course builds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 6: WHO IT IS FOR ─────────────────────── -->
+  <section id="is-this-for-you">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">Is This For You</span>
+        <h2>Honest answer.</h2>
+      </div>
+      <div class="fit-grid">
+        <div class="fit-col green">
+          <h3>This is for you if...</h3>
+          <ul class="fit-list">
+            <li><span class="icon">✓</span>You are booking calls and some are closing</li>
+            <li><span class="icon">✓</span>Revenue has been flat despite leads coming in</li>
+            <li><span class="icon">✓</span>Follow-up is manual and inconsistent</li>
+            <li><span class="icon">✓</span>You want the problem fixed not just diagnosed</li>
+            <li><span class="icon">✓</span>You are willing to share CRM access</li>
+          </ul>
+        </div>
+        <div class="fit-col red">
+          <h3>This is not for you if...</h3>
+          <ul class="fit-list">
+            <li><span class="icon">✗</span>You have no consistent lead flow yet</li>
+            <li><span class="icon">✗</span>You want someone to generate leads for you</li>
+            <li><span class="icon">✗</span>You are not the decision maker</li>
+            <li><span class="icon">✗</span>You are not willing to share access</li>
+            <li><span class="icon">✗</span>You are not ready to commit to fixing it</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 7: CTA ────────────────────────────────── -->
+  <section id="cta">
+    <div class="container">
+      <span class="label">Ready to Start</span>
+      <h2>Book a free 20-minute pipeline audit.</h2>
+      <p>We look at your setup and tell you exactly where revenue is leaking. No pitch. No obligation. If we cannot find anything useful in 20 minutes, you have lost nothing.</p>
+      <a href="audit.html" class="btn btn-cyan">Book Your Free Audit</a>
+      <p class="cta-small">Max 6 clients · <a href="https://linkedin.com/in/tanay-shah-revops-lead" style="color:var(--muted);text-decoration:none;" target="_blank">linkedin.com/in/tanay-shah-revops-lead</a></p>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <strong>Acsensia</strong>
+          <span>Revenue Operations Consulting</span>
+        </div>
+        <div class="footer-contact">
+          <a href="mailto:tanay141096@gmail.com">tanay141096@gmail.com</a>
+          <a href="https://linkedin.com/in/tanay-shah-revops-lead" target="_blank">linkedin.com/in/tanay-shah-revops-lead</a>
+          <a href="tel:+919004511099">+91 9004511099</a>
+        </div>
+      </div>
+      <p class="footer-copy">© 2025 Acsensia. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
